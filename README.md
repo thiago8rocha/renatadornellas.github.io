@@ -1,6 +1,6 @@
 # renatadornellas.github.io
 
-[![CI](https://github.com/thiago8rocha/renatadornellas.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/thiago8rocha/renatadornellas.github.io/actions/workflows/ci.yml)
+[![CI](https://github.com/renatadornellas/renatadornellas.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/renatadornellas/renatadornellas.github.io/actions/workflows/ci.yml)
 
 Portfolio of Renata Dornellas, UX Researcher. Brazilian Portuguese is the default language (`/`), English lives at `/en/`. The default theme is light.
 

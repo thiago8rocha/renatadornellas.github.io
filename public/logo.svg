@@ -1,19 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 244 96" role="img" aria-label="RD">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 100" role="img" aria-label="RD">
   <defs>
-    <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="14" y1="0" x2="230" y2="0">
-      <stop offset="0" stop-color="#7c4dff"/>
-      <stop offset="1" stop-color="#c08cff"/>
+    <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="14" y1="0" x2="110" y2="0">
+      <stop offset="0" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#f4627d"/>
     </linearGradient>
   </defs>
-  <g fill="none" stroke="url(#g)" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="url(#g)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
     <!-- R -->
-    <path d="M18 74V22h24a15 15 0 0 1 0 30H18M40 52l18 22" stroke-width="10"/>
-    <!-- D -->
-    <path d="M88 22h20a26 26 0 0 1 0 52H88z" stroke-width="10"/>
-    <!-- balao de fala: escuta -->
-    <path d="M152 26h62a10 10 0 0 1 10 10v24a10 10 0 0 1-10 10h-40l-14 12V70h-8a10 10 0 0 1-10-10V36a10 10 0 0 1 10-10z" stroke-width="5"/>
+    <path d="M14 72V24H32a14 14 0 0 1 0 28H14M30 52l16 20"/>
+    <!-- D = balão de fala -->
+    <path d="M66 83V24H84a24 24 0 0 1 0 48H78Z"/>
   </g>
-  <g fill="url(#g)">
-    <circle cx="170" cy="48" r="4.5"/><circle cx="188" cy="48" r="4.5"/><circle cx="206" cy="48" r="4.5"/>
+  <!-- reticências dentro do balão -->
+  <g fill="#f4627d">
+    <circle cx="77.5" cy="48" r="3.4"/><circle cx="87" cy="48" r="3.4"/><circle cx="96.5" cy="48" r="3.4"/>
   </g>
 </svg>

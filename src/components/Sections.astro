@@ -1,0 +1,215 @@
+---
+import type { Lang } from '../data/types';
+import { getContent } from '../data';
+import SectionHead from './SectionHead.astro';
+import Illustration from './Illustration.astro';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getContent(lang);
+const { ui, featured } = c;
+const S = ui.sections;
+---
+<section class="section" id="about" aria-labelledby="about-h">
+  <div class="container">
+    <SectionHead id="about-h" no="01" label={S.about.label} heading={S.about.heading} />
+    <div class="about-grid">
+      <div>
+        <p class="main-p">{c.about.paragraphs[0]}</p>
+        {c.about.paragraphs.slice(1).map((p) => <p>{p}</p>)}
+        <div class="now">
+          <h3>{ui.about.currently}</h3>
+          <ul>{c.about.currently.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      </div>
+      <div class="illustration"><Illustration label={ui.about.illustrationLabel} /></div>
+    </div>
+    <h3 class="domains-label">{ui.about.domains}</h3>
+    <ul class="chips">{c.about.domains.map((d) => <li class="chip accent">{d}</li>)}</ul>
+    <div class="highlights">
+      {c.about.highlights.map((h) => <div class="card lift"><h3>{h.title}</h3><p>{h.text}</p></div>)}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="process" aria-labelledby="process-h">
+  <div class="container">
+    <SectionHead id="process-h" no="02" label={S.process.label} heading={S.process.heading} intro={S.process.intro} />
+    <ol class="steps">
+      {c.process.map((s, i) => (
+        <li class="step">
+          <div class="head" aria-hidden="true"><span class="no">{String(i + 1).padStart(2, '0')}</span><span class="line"></span></div>
+          <div class="card lift">
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <ul class="chips">{s.deliverables.map((d) => <li class="chip">{d}</li>)}</ul>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="experience" aria-labelledby="experience-h">
+  <div class="container">
+    <SectionHead id="experience-h" no="03" label={S.experience.label} heading={S.experience.heading} />
+    <ol class="timeline">
+      {c.experience.map((job, i) => {
+        const first = job.roles[0];
+        const last = job.roles[job.roles.length - 1];
+        const range = job.roles.length > 1 ? `${last.period.split(' – ')[0]} – ${first.period.split(' – ')[1]}` : first.period;
+        return (
+          <li class:list={['job', { current: job.current }]}>
+            <div class="when"><span>{range}</span>{job.current && <span class="badge">{ui.experience.current}</span>}</div>
+            <span class="node" aria-hidden="true"></span>
+            <div class="card">
+              {job.roles.length > 1 ? (
+                <>
+                  <h3>{job.company}</h3>
+                  <div class="place">{job.place}</div>
+                  {job.roles.map((r) => <div class="role-line"><span class="company">{r.title}</span><span class="period">{r.period}</span></div>)}
+                </>
+              ) : (
+                <>
+                  <h3>{first.title}</h3>
+                  <div class="company">{job.company}</div>
+                  <div class="place">{job.place}</div>
+                </>
+              )}
+              <p class="summary">{job.summary}</p>
+              {job.bullets.length > 0 && <ul class="dash">{job.bullets.map((b) => <li>{b}</li>)}</ul>}
+              {job.extraBullets.length > 0 && (
+                <>
+                  <ul class="dash more" id={`more-${i}`} hidden>{job.extraBullets.map((b) => <li>{b}</li>)}</ul>
+                  <button class="dashed-btn" type="button" data-more-toggle data-target={`more-${i}`} data-more={ui.experience.showMore.replace('{n}', String(job.extraBullets.length))} data-less={ui.experience.showLess} aria-expanded="false" aria-controls={`more-${i}`}>{ui.experience.showMore.replace('{n}', String(job.extraBullets.length))}</button>
+                </>
+              )}
+              {job.tags.length > 0 && <ul class="chips">{job.tags.map((t) => <li class="chip">{t}</li>)}</ul>}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="projects" aria-labelledby="projects-h">
+  <div class="container">
+    <SectionHead id="projects-h" no="04" label={S.projects.label} heading={S.projects.heading} intro={S.projects.intro} />
+    <article class="card feature" aria-labelledby="feat-h">
+      <div class="cols">
+        <div>
+          <div class="badges"><span class="badge">{featured.badge}</span><span class="domain">{featured.domain}</span></div>
+          <h3 id="feat-h">{featured.title}</h3>
+          <p class="client">{featured.client}</p>
+          <p>{featured.summary}</p>
+          <div class="rolebox"><strong>{ui.projects.role}:</strong> {featured.role}</div>
+          <div class="metrics">
+            {featured.metrics.map((m) => <div class="metric"><b>{m.value}</b><span>{m.label}</span></div>)}
+          </div>
+          <ul class="chips">{featured.methods.map((t) => <li class="chip accent">{t}</li>)}</ul>
+        </div>
+        <div class="arch">
+          <h4>{ui.projects.flowTitle}</h4>
+          <ol>
+            {featured.flow.map((l) => <li><strong>{l.name}</strong><span>{l.detail}</span></li>)}
+          </ol>
+          <p class="note">{featured.flowNote}</p>
+        </div>
+      </div>
+      <p class="note">{featured.confidentialityNote}</p>
+    </article>
+
+    <div class="filters" role="group" aria-label={ui.projects.filterLabel}>
+      <button type="button" data-filter="all" aria-pressed="true">{ui.projects.filterAll}</button>
+      <button type="button" data-filter="research" aria-pressed="false">{ui.projects.filterResearch}</button>
+      <button type="button" data-filter="people" aria-pressed="false">{ui.projects.filterPeople}</button>
+    </div>
+    <ul class="grid-cards">
+      {c.projects.map((p) => (
+        <li data-group={p.group}>
+          <article class="card pcard lift">
+            <div class="badges"><span class:list={['badge', { warn: p.group === 'people' }]}>{p.badge}</span><span class="domain">{p.domain}</span></div>
+            <h3>{p.title}</h3>
+            <p class="client">{p.client}</p>
+            <p>{p.summary}</p>
+            <div class="rolebox"><strong>{ui.projects.role}:</strong> {p.role}</div>
+            <div class="meta">
+              <p class="label">{ui.projects.methods}</p>
+              <ul class="chips">{p.methods.map((t) => <li class="chip">{t}</li>)}</ul>
+              {p.tools.length > 0 && (
+                <>
+                  <p class="label">{ui.projects.tools}</p>
+                  <p class="tools">{p.tools.join(' · ')}</p>
+                </>
+              )}
+            </div>
+            {p.links && (
+              <div class="links">
+                {p.links.map((l) => <a class="btn ghost sm" href={l.href} rel="noopener"><Icon name="link" />{l.label}<span class="sr-only"> ({p.title})</span></a>)}
+              </div>
+            )}
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="skills" aria-labelledby="skills-h">
+  <div class="container">
+    <SectionHead id="skills-h" no="05" label={S.skills.label} heading={S.skills.heading} intro={S.skills.intro} />
+    <div class="skill-groups">
+      {c.skills.map((g) => (
+        <div class="card">
+          <h3>{g.group}</h3>
+          <ul class="chips">{g.items.map((i) => <li class:list={['chip', { daily: i.daily }]}>{i.name}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section tight" id="education" aria-labelledby="edu-h">
+  <div class="container">
+    <SectionHead id="edu-h" no="06" label={S.education.label} heading={S.education.heading} />
+    <ul class="edu-grid">
+      {c.education.map((e) => (
+        <li class="card edu lift">
+          <div class="edu-icon"><Icon name={e.icon === 'degree' ? 'graduation' : e.icon === 'cert' ? 'award' : 'book'} /></div>
+          <div>
+            <h3>{e.title}</h3>
+            <p>{e.place}</p>
+            <p class="edu-meta">{e.meta}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="contact" aria-labelledby="contact-h">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <SectionHead id="contact-h" no="07" label={S.contact.label} heading={S.contact.heading} intro={S.contact.intro} />
+        <p class="eyebrow" aria-hidden="true"><b>{ui.contact.direct}</b></p>
+        <ul class="contact-list">
+          <li><Icon name="mail" /><a href={`mailto:${c.profile.email}`}>{c.profile.email}</a></li>
+          {c.profile.location && <li><Icon name="pin" />{c.profile.location}</li>}
+          <li><Icon name="linkedin" /><a href={c.profile.linkedin} rel="noopener">LinkedIn</a></li>
+          {c.profile.github && <li><Icon name="github" /><a href={c.profile.github} rel="noopener">GitHub</a></li>}
+        </ul>
+        {c.profile.resumeFile && <a class="btn ghost" href={c.profile.resumeFile} download><Icon name="download" />{ui.hero.downloadResume}</a>}
+      </div>
+      <form class="card contact-form" action={`mailto:${c.profile.email}`} method="post" enctype="text/plain" aria-labelledby="form-h">
+        <h3 id="form-h">{ui.contact.formTitle}</h3>
+        <div class="field"><label for="f-name">{ui.contact.name}</label><input id="f-name" name="name" type="text" autocomplete="name" required /></div>
+        <div class="field"><label for="f-email">{ui.contact.email}</label><input id="f-email" name="email" type="email" autocomplete="email" required /></div>
+        <div class="field"><label for="f-msg">{ui.contact.message}</label><textarea id="f-msg" name="message" required></textarea></div>
+        <button class="btn" type="submit"><Icon name="mail" />{ui.contact.send}</button>
+      </form>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 244 96" role="img" aria-label="RD">
+  <defs>
+    <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="14" y1="0" x2="230" y2="0">
+      <stop offset="0" stop-color="#7c4dff"/>
+      <stop offset="1" stop-color="#c08cff"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#g)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- R -->
+    <path d="M18 74V22h24a15 15 0 0 1 0 30H18M40 52l18 22" stroke-width="10"/>
+    <!-- D -->
+    <path d="M88 22h20a26 26 0 0 1 0 52H88z" stroke-width="10"/>
+    <!-- balao de fala: escuta -->
+    <path d="M152 26h62a10 10 0 0 1 10 10v24a10 10 0 0 1-10 10h-40l-14 12V70h-8a10 10 0 0 1-10-10V36a10 10 0 0 1 10-10z" stroke-width="5"/>
+  </g>
+  <g fill="url(#g)">
+    <circle cx="170" cy="48" r="4.5"/><circle cx="188" cy="48" r="4.5"/><circle cx="206" cy="48" r="4.5"/>
+  </g>
+</svg>

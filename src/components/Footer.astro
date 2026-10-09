@@ -1,0 +1,22 @@
+---
+import type { Lang } from '../data/types';
+import { getContent } from '../data';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { profile, ui } = getContent(lang);
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container bar">
+    <a class="brand" href="#top" aria-label={profile.name}><img src="/logo.svg" alt="" width="62" height="24" /></a>
+    <p class="copy">© {year} {profile.name} · {profile.title}</p>
+    <nav class="foot-links" aria-label="Footer">
+      <a class="icon-link" href={profile.linkedin} rel="noopener" aria-label="LinkedIn"><Icon name="linkedin" /></a>
+      {profile.github && <a class="icon-link" href={profile.github} rel="noopener" aria-label="GitHub"><Icon name="github" /></a>}
+      <a class="icon-link" href={`mailto:${profile.email}`} aria-label={`Email ${profile.email}`}><Icon name="mail" /></a>
+      <a href="#top">{ui.footer.backToTop} <Icon name="arrow-up" /></a>
+    </nav>
+  </div>
+</footer>

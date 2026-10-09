@@ -1,0 +1,42 @@
+---
+import type { Lang } from '../data/types';
+import { getContent } from '../data';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { profile, ui } = getContent(lang);
+const e = profile.evidence;
+---
+<section class="hero" id="top">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <p class="hello">{ui.hero.greeting}</p>
+        <h1>{profile.name}</h1>
+        <p class="title">{profile.title}</p>
+        <p class="tagline">{profile.tagline}</p>
+        <div class="actions">
+          <a class="btn" href="#projects">{ui.hero.viewProjects}<Icon name="arrow" /></a>
+          {profile.resumeFile && <a class="btn ghost" href={profile.resumeFile} download><Icon name="download" />{ui.hero.downloadResume}</a>}
+        </div>
+        <ul class="social">
+          <li><a class="icon-btn" href={profile.linkedin} rel="noopener" aria-label="LinkedIn"><Icon name="linkedin" /></a></li>
+          {profile.github && <li><a class="icon-btn" href={profile.github} rel="noopener" aria-label="GitHub"><Icon name="github" /></a></li>}
+          <li><a class="icon-btn" href={`mailto:${profile.email}`} aria-label={`Email ${profile.email}`}><Icon name="mail" /></a></li>
+          {profile.location && <li class="pin"><Icon name="pin" />{profile.location}</li>}
+        </ul>
+      </div>
+      <aside class="evidence" aria-labelledby="evidence-h">
+        <div class="ebar"><Icon name="lightbulb" /><h2 id="evidence-h">{e.title}</h2></div>
+        <ul>
+          {e.lines.map((l) => <li><Icon name="check" /><span>{l}</span></li>)}
+        </ul>
+        <p class="sum">{e.summary}</p>
+      </aside>
+    </div>
+    <ul class="stats" aria-label={ui.hero.statsLabel}>
+      {profile.stats.map((s) => <li><span class="num">{s.value}{s.unit && <small>{s.unit}</small>}</span><span class="lab">{s.label}</span></li>)}
+    </ul>
+  </div>
+</section>

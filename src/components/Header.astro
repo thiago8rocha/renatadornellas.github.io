@@ -1,0 +1,35 @@
+---
+import type { Lang } from '../data/types';
+import { getContent } from '../data';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { ui, profile } = getContent(lang);
+const items = [
+  ['about', ui.nav.about],
+  ['process', ui.nav.process],
+  ['experience', ui.nav.experience],
+  ['projects', ui.nav.projects],
+  ['skills', ui.nav.skills],
+  ['contact', ui.nav.contact],
+] as const;
+const other = lang === 'pt' ? 'en' : 'pt-BR';
+---
+<a class="skip" href="#main">{ui.skipToContent}</a>
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="#top"><img src="/logo.svg" alt="" width="82" height="32" /><span>{profile.name}</span></a>
+    <div class="tools">
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <ul>
+          {items.map(([id, label]) => <li><a href={`#${id}`} data-spy={id}>{label}</a></li>)}
+        </ul>
+        {profile.resumeFile && <a class="btn sm" href={profile.resumeFile} download><Icon name="download" />{ui.nav.resume}</a>}
+      </nav>
+      <a class="icon-btn" href={ui.langSwitch.targetHref} hreflang={other} lang={other} aria-label={`${ui.langSwitch.label}: ${ui.langSwitch.targetName}`}>{ui.langSwitch.short}</a>
+      <button class="icon-btn" type="button" data-theme-toggle aria-label={ui.themeToggle} aria-pressed="false"><Icon name="sun" /></button>
+      <button class="icon-btn menu-toggle" type="button" data-menu-toggle aria-controls="site-nav" aria-expanded="false">{ui.menu}</button>
+    </div>
+  </div>
+</header>
